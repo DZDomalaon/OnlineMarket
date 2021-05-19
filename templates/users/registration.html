@@ -1,0 +1,49 @@
+{% extends 'base.html' %}}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/registration/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">	
+  	<div class="center">  
+		<form id="registerform">
+			{% csrf_token %}      			
+			<h2 class="d-flex justify-content-center">Register</h2>					
+			<div class="row align-items-center mb-2 mt-2">
+
+					<label for="first-name">First Name</label>
+					<input type="text" class="form-control" id="first_name" placeholder="First Name">
+
+					<label for="last-name">Last Name</label>
+					<input type="text" class="form-control" id="last_name" placeholder="Last Name">
+
+					<label for="email">Email address</label>
+					<input type="email" class="form-control" id="email" placeholder="Enter Email">
+					<span id="error" style="display:none;color:red;">Wrong email</span>
+
+					<label for="password">Password</label>
+					<input type="password" class="form-control" id="password" placeholder="Password">				
+
+				<label for="password2">Confirm Password</label>
+				<input type="password" class="form-control" id="password2">
+				<span id='message'></span>
+
+				<div class="form-check mt-2">				
+					<input type="checkbox" class="form-check-input" id="is_seller">				
+					<label class="form-check-label" for="is-is_seller">Is Seller</label>
+				</div>
+			</div>						
+			<div class="text-center">
+				<button class="btn btn-primary" onclick="addUser()" type="submit" id="registerbtn">Register</button>     
+			</div>	 			      			                       
+		</form>
+	</div> 	
+</div>
+<p class="text-center mb-4">If you already have an account, <a href="{% url 'users:userlogin' %}">login</a> instead.</p>     
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'users/registration/js/register.js' %}"></script>
+{% endblock %}
