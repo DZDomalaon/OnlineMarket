@@ -29,13 +29,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Email is already taken.")
         return email
 
-    # def validate(self, data):
-    #     if not data.get('password') or not data.get('password2'):
-    #         raise serializers.ValidationError("Please enter a password and confirm it.")
-    #     if data.get('password') != data.get('password2'):
-    #         raise serializers.ValidationError("Those passwords don't match.")
-    #     return data
-
     def create(self, validated_data):
         user = CustomUser.objects.create(            
             email=validated_data['email'],
@@ -49,3 +42,4 @@ class RegistrationSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+    

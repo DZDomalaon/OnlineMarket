@@ -1,3 +1,5 @@
+from django.shortcuts import render
+from products.models import Product, SubCategory
 from django.views.generic.base import TemplateView
 
 
@@ -10,4 +12,8 @@ class LoginView(TemplateView):
 
 
 class DashboardView(TemplateView):
-    template_name = "dashboard.html"
+    
+    def get(self, request, *args, **kwargs):
+        products = Product.objects.all()
+        sub_categories = SubCategory.objects.all()
+        return render(request, "dashboard.html", {'products': products, 'sub_categories': sub_categories})

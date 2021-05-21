@@ -1,9 +1,7 @@
-from django.views.decorators.csrf import csrf_exempt
 from .models import CustomUser
 from django.contrib.auth import login, logout, authenticate 
 from rest_framework import status, viewsets, permissions
 from rest_framework.response import Response
-from rest_framework.decorators import action, api_view, renderer_classes
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 from .serializers import RegistrationSerializer, UserSerializer
@@ -11,7 +9,7 @@ from .serializers import RegistrationSerializer, UserSerializer
 class UserViewSet(viewsets.ViewSet):
         
     queryset = CustomUser.objects.all()
-    serializer_class = RegistrationSerializer
+    serializer_class = UserSerializer
     permission_classes = (permissions.AllowAny,)
     
     # authentication_classes = [authentication.TokenAuthentication]
@@ -33,8 +31,7 @@ class UserViewSet(viewsets.ViewSet):
     def post(self, request, *args, **kwargs):
         
         serializer = RegistrationSerializer(data=request.data)        
-        
-        # import pdb; pdb.set_trace()
+                
         if serializer.is_valid():
             serializer.save()        
         return Response({'serializer': serializer.data})
@@ -48,11 +45,14 @@ class UserViewSet(viewsets.ViewSet):
 
         user = authenticate(username=username, password=password)
         token = user.auth_token.key
-
-        import pdb; pdb.set_trace()
+        
         if user is not None:
             login(request, user)                
 
             return Response({'token': token}, status=200)
         else:
             return Response(status=404)
+
+    def userlogout(self, request):
+        logout(request)
+        return Response(status=200)

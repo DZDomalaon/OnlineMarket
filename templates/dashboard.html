@@ -1,2 +1,80 @@
 {% extends 'base.html' %}
-<p>Hello</p>
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class=container>    
+    <h3>Featured Items </h3>
+    <hr>
+    <div class="row" id="featured">  
+       
+    </div>          
+    <br>    
+    <h3>Most Popular</h3>
+    <hr>
+    <div class="row">  
+        {% for product in products %} 
+            <div class="col md-3">
+                <div class="card mb-2 mt-4" id="productcard" style="width: 15rem;">
+                    <img src="{{ product.product_image.url }}" class="card-img-top">
+                    <div class="card-body">
+                        <p class="card-title">{{ product.product_name }}</p>
+                        <p class="card-text text-muted h6">{{ product.location }} | {{ product.price}} </p>                                  
+                        <button type="button" class="btn btn-dark"> View </button>
+
+                        {% if product.seller != user %}
+                        <button type="button" class="btn btn-dark"> Checkout </button>
+                        {% endif %}
+                    </div>
+                </div> 
+            </div>                 
+        {% endfor %}   
+    </div>          
+    <br>   
+    <h3>Sale Items</h3>
+    <hr>
+    <div class="row">  
+        {% for product in products %} 
+            <div class="col md-3">
+                <div class="card mb-2 mt-4" id="productcard" style="width: 15rem;">
+                    <img src="{{ product.product_image.url }}" class="card-img-top">
+                    <div class="card-body">
+                        <p class="card-title">{{ product.product_name }}</p>
+                        <p class="card-text text-muted h6">{{ product.location }} | {{ product.price}} </p>                                  
+                        <button type="button" class="btn btn-dark"> View </button>
+
+                        {% if product.seller != user %}
+                        <button type="button" class="btn btn-dark"> Checkout </button>
+                        {% endif %}
+                    </div>
+                </div> 
+            </div>                 
+        {% endfor %}   
+    </div>          
+    <br>   
+    <h3>Category</h3>    
+    <hr>
+    <div class="row">
+        {% for subcategory in sub_categories %} 
+            <div class="col md-3">
+                <div class="card mb-2 mt-4" id="productcard" style="width: 15rem;">
+                    <img src="{{ subcategory.subcategory_img.url }}" class="card-img-top">
+                    <div class="card-body">
+                        <p class="card-title">{{ subcategory.subcategory }}</p>                                                  
+                        <button type="button" class="btn btn-dark"> View </button>
+                    </div>
+                </div> 
+            </div>                 
+        {% endfor %}   
+    </div>    
+</div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'main.js' %}"></script>
+{% endblock %}  

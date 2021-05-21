@@ -1,33 +1,49 @@
-<nav class="navbar navbar-expand-md" style="border-bottom: 3px solid rgb(42, 133, 139);">
-    <div class="container-fluid" >
-        <div class="navbar-collapse collapse w-100 ">
-            <a href="{% url 'users:dashboard' %}" class="btn btn-outline-dark">Home Page</a>
-        </div>
-        <h1 class="navbar-brand"> Ecomm </h1>
-        <div class="container">
+
+{% load static %}
+
+<html>
+<body>
+    <head>
+        <script type="text/javascript" src="{% static 'users/logout/js/logout.js' %}"></script>
+    </head>
+
+    <nav class="navbar navbar-expand-md" style="border-bottom: 3px solid rgb(42, 133, 139);">
+        <div class="container-fluid" >
             <div class="navbar-collapse collapse w-100 ">
-                <div class="navbar-nav ml-auto"> 
-                    {% if user.is_authenticated %} 
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">                 
-                        <ul class="navbar-nav">        
-                        <li class="nav-item dropdown .dropdown-menu-right">                                       
-                            <a class="nav-link dropdown-toggle btn btn-outline-dark offset-md-0 w-100"  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ user.get_full_name }}
-                            </a>                                         
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Cart</a>                         
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Logout</a>
-                            </div>
-                        </li>
-                        </ul>        
-                    </div>                                                                  
-                    {% endif %}
-                </div>   
+                <a href="{% url 'users:dashboard' %}" class="btn btn-outline-dark">Home Page</a>
             </div>
-        </div>
-    </div>        
-</nav>
+            <h1 class="navbar-brand"> Ecomm </h1>
+            <div class="container">
+                <div class="navbar-collapse collapse w-100 ">
+                    <div class="navbar-nav ml-auto"> 
+                        {% if user.is_authenticated %} 
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavDropdown">                 
+                            <ul class="navbar-nav">        
+                            <li class="nav-item dropdown .dropdown-menu-right">                                       
+                                <a class="nav-link dropdown-toggle btn btn-outline-dark offset-md-0 w-100"  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ user.get_full_name }}
+                                </a>                                         
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                {% if user.is_seller %}
+                                    <a class="dropdown-item" href="{% url 'products:ownedproducts' user.id %}">Products</a>      
+                                {% endif %}
+                                <a class="dropdown-item" href="#">Cart</a>                         
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" onclick="logoutUser()">Logout</a>
+                                </div>
+                            </li>
+                            </ul>        
+                        </div> 
+                        {% else %}
+                        <a class="btn btn-outline-dark" href="{% url 'users:userlogin' %}" role="button">Login</a>
+                        {% endif %}
+                    </div>   
+                </div>
+            </div>
+        </div>        
+    </nav>
+</body>
+</html>

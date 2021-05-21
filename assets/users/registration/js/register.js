@@ -55,13 +55,3 @@ function addUser()
         }
     });
 }
-
-function add_success()
-{
-    alert("Added user Successfully");
-}
-
-function add_error()
-{    
-    alert("Can't add user!");
-}

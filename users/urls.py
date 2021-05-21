@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 from users.api import UserViewSet
-from rest_framework.authtoken.views import obtain_auth_token
 
 app_name = 'users'
 urlpatterns = [    
@@ -12,4 +11,5 @@ urlpatterns = [
 
     path('api/users/register/', UserViewSet.as_view({'post': 'post'})),
     path('api/login/', UserViewSet.as_view({'post': 'userlogin'})),
+    path('api/logout/', UserViewSet.as_view({'get': 'userlogout'})),
 ]

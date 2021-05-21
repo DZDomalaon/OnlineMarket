@@ -1,0 +1,14 @@
+.card {
+    box-shadow: 0 10px 20px #E3E7EB;
+    min-height: 200px;
+}
+
+#productcard img {
+    height: 200px;
+    background-clip: padding-box;
+    object-fit: cover;        
+  }
+
+#productcard {    
+    width: 15rem;
+}
