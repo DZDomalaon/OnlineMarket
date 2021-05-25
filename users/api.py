@@ -1,10 +1,11 @@
+from django.shortcuts import get_object_or_404
 from .models import CustomUser
 from django.contrib.auth import login, logout, authenticate 
-from rest_framework import status, viewsets, permissions
+from rest_framework import serializers, status, viewsets, permissions
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
-from .serializers import RegistrationSerializer, UserSerializer
+from .serializers import RegistrationSerializer, UserSerializer, UsersSerializer
 
 class UserViewSet(viewsets.ViewSet):
         
@@ -16,18 +17,14 @@ class UserViewSet(viewsets.ViewSet):
     # authentication_classes = [SessionAuthentication, BasicAuthentication]
 
     # @api_view(('GET',))
-    # def get(request, **kwargs):
+    def get(self, request):
         
-    #     user = CustomUser.objects.get(pk=kwargs.get('pk'))
-        
-    #     serializer = RegistrationSerializer()
+        # import pdb; pdb.set_trace()
+        get_user = request.GET.get('user', '')
+        user = get_object_or_404(CustomUser, pk=int(get_user))        
+        serializer = UserSerializer(user)        
+        return Response(serializer.data, status.HTTP_200_OK)
 
-    #     context = {
-    #         'user': str(request.user),            
-    #         'auth': str(request.auth),    
-    #         'serializer': serializer,
-    #     }
-    #     return Response(context)
     def post(self, request, *args, **kwargs):
         
         serializer = RegistrationSerializer(data=request.data)        
@@ -35,6 +32,18 @@ class UserViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             serializer.save()        
         return Response({'serializer': serializer.data})
+
+    def update_user(self, request):
+
+        import pdb; pdb.set_trace()
+        get_user = request.POST.get('user', '')
+        user = get_object_or_404(CustomUser, pk=int(get_user)) 
+        serializer = UserSerializer(user, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_200_OK)
+        return Response(status.HTTP_400_BAD_REQUEST)
 
     def userlogin(self, request, format=None):
 
@@ -56,3 +65,11 @@ class UserViewSet(viewsets.ViewSet):
     def userlogout(self, request):
         logout(request)
         return Response(status=200)
+
+
+    def userlist(self, request):
+
+        # import pdb;pdb.set_trace()
+        list = CustomUser.objects.all()
+        serializer = UsersSerializer(list, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)

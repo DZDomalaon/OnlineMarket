@@ -19,7 +19,6 @@ function loginUser()
         success: function(data){
             location.href= base_url + "/users/dashboard"
             localStorage.setItem("token", data.token);
-            alert('Successfully logged in!');
         },
         error: function(e){
             console.log(e);

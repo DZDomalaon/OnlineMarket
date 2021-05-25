@@ -9,6 +9,8 @@
 {% block content %}
 
     <div class="container">
+        <input type="hidden" id="product_id" value="{{ instance.pk }}">
+        
         <form id="updateProduct" method="POST" enctype="multipart/form-data">          
             {% csrf_token %}  
             <div class="leftside">
@@ -53,15 +55,15 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="price">Price </label>
-                        <input type="text" class="form-control" id="price" value="{{ instance.price }}" onchange="setTwoNumberDecimal" min="0" max="10" step="0.25" value="0.00">
+                        <input type="text" class="form-control" id="price" value="{{ instance.price }}" onchange="setTwoNumberDecimal()" min="0" max="10" step="0.25" value="0.00">
                     </div>                    
                     <div class="form-group col-md-4">
                         <label for="shipping_fee">Shipping Fee</label>
-                        <input type="text" class="form-control" id="shipping_fee" value="{{ instance.shipping_fee }}" onchange="setTwoNumberDecimal" min="0" max="10" step="0.25" value="0.00">
+                        <input type="text" class="form-control" id="shipping_fee" value="{{ instance.shipping_fee }}" onchange="setTwoNumberDecimal()" min="0" max="10" step="0.25" value="0.00">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="discount">Discount</label>
-                        <input type="text" class="form-control" id="discount" value="{{ instance.discount }}" onchange="setTwoNumberDecimal" min="0" max="10" step="0.25" value="0.00">
+                        <input type="text" class="form-control" id="discount" value="{{ instance.discount }}" onchange="setTwoNumberDecimal()" min="0" max="10" step="0.25" value="0.00">
                     </div>
                 </div>               
                 <button type="submit" class="btn btn-warning">Update Product</button>
@@ -74,9 +76,9 @@
                 {% for category in categories %}               
                     <div class="form-check" id="categories">
                         {% if category.category == instance.product_category %}                        
-                            <input class="form-check-input" type="checkbox" id="product_category" checked>
+                            <input class="form-check-input" type="checkbox" value="{{ instance.product_category }}" id="product_category" checked>
                         {% else %}
-                            <input class="form-check-input" type="checkbox" id="product_category">
+                            <input class="form-check-input" type="checkbox" value="{{ instance.product_category }}" id="product_category">
                         {% endif %}
                         <label class="form-check-label" for="product_category">
                             {{ category.category }}

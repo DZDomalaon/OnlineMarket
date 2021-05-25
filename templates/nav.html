@@ -30,8 +30,11 @@
                                 {% if user.is_seller %}
                                     <a class="dropdown-item" href="{% url 'products:ownedproducts' user.id %}">Products</a>      
                                 {% endif %}
-                                <a class="dropdown-item" href="#">Cart</a>                         
-                                <a class="dropdown-item" href="#">Edit</a>
+                                {% if user.is_superuser %}
+                                    <a class="dropdown-item" href="{% url 'users:userlist' %}">Users</a>      
+                                {% endif %}
+                                <a class="dropdown-item" href="{% url 'users:usercart' user.id %}">Cart</a>                         
+                                <a class="dropdown-item" href="{% url 'users:updateuser' user.id %}">Edit</a>
                                 <a class="dropdown-item" onclick="logoutUser()">Logout</a>
                                 </div>
                             </li>

@@ -1,12 +1,32 @@
+from re import T
+
+from django.db import models
+from users.models import CustomUser
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Category, Product, SubCategory
+from users.serializers import UserSerializer
+from .models import Category, Order, OrderItem, Product, SubCategory
 
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ('category')
+
+class SubCategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SubCategory
+        fields = ('subcategory_img', 'subcategory')
 
 class ProductSerializer(serializers.ModelSerializer):
+
+    # category = CategorySerializer(source='product_category.category', many=True)
+    # product_subcategory = SubCategorySerializer(source='product_subcategory.subcategory', many=True)
+
     class Meta:
         model = Product
-        fields = ('product_name', 'product_image', 'description', 'location', 'price','shipping_fee','discount','is_discounted','is_available')
+        fields = ('id','product_name', 'product_image', 'description', 'location', 'price','shipping_fee','discount','is_discounted', 'quantity','is_available', 'seller_id')
         
 class AddProductSerializer(serializers.ModelSerializer):
     
@@ -23,7 +43,7 @@ class AddProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('product_name', 'description', 'location', 'price', 'product_category', 'product_subcategory','shipping_fee','discount','is_discounted', 'quantity','is_available')
+        fields = ('product_name', 'product_image', 'description', 'location', 'price', 'product_category', 'product_subcategory','shipping_fee','discount','is_discounted', 'quantity','is_available')
 
 class UpdateProductSerializer(serializers.ModelSerializer):
     
@@ -40,16 +60,17 @@ class UpdateProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('product_name', 'description', 'location', 'price', 'product_category', 'product_subcategory','shipping_fee','discount','is_discounted', 'quantity','is_available')
+        fields = ('product_name', 'description', 'location', 'price','shipping_fee','discount','is_discounted', 'quantity','is_available')
         
-class CategorySerializer(serializers.ModelSerializer):
+
+class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Category
-        fields = ('category')
+        model = Order
+        fields = ('id','date_ordered', 'is_completed')        
 
-class SubCategorySerializer(serializers.ModelSerializer):
-
+class OrderItemSerializer(serializers.ModelSerializer):
+    
     class Meta:
-        model = SubCategory
-        fields = ('subcategory_img', 'subcategory')
+        model = OrderItem
+        fields = ('id','quantity', 'date_added')

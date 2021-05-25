@@ -1,5 +1,7 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, SlugField
+from datetime import timedelta, datetime
 from users.models import CustomUser
 
 
@@ -20,13 +22,13 @@ class SubCategory(models.Model):
 
     def __str__(self):
         return self.subcategory
-
+        
 
 class Product(models.Model):
 
     id = models.AutoField(primary_key=True, unique=True)
     product_name = models.CharField(max_length=250)
-    product_image = models.ImageField(blank=True, null=True, upload_to='product/', default='default.png')
+    product_image = models.ImageField(blank=True, null=True, upload_to='product/', default='product/default.png')
     description = models.CharField(max_length=250)
     location = models.CharField(max_length=250, blank=True, null=True)  
     product_category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -45,27 +47,34 @@ class Product(models.Model):
         return self.product_name
 
 
+class OrderItem(models.Model):
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)    
+    quantity = models.IntegerField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    is_shipping = models.BooleanField(default=False)
+    shipping_duration = models.DurationField(blank=True, null=True)
+
+    def __str__(self):
+        return str(self.product)
+
+
 class Order(models.Model):
     
     buyer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  
     date_ordered = models.DateTimeField(auto_now_add=True)    
     is_completed = models.BooleanField(default=False)
+    order_item = models.ManyToManyField(OrderItem)
 
     def __str__(self):
-        return str(self.checkedout_date)
+        return str(self.date_ordered)
 
+class OrderPayment(models.Model):
 
-class OrderItem(models.Model):
-
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    payment_date = models.DateTimeField(auto_now_add=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.product
-
-
+    
 # class ProductComment(models.Model):
     
 #     comment = models.CharField(max_length=250)

@@ -6,6 +6,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ('first_name', 'last_name',)
 
+class UsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('first_name', 'last_name','is_seller', 'email')
+
 class RegistrationSerializer(serializers.ModelSerializer):
     
     email = serializers.EmailField(required=True)

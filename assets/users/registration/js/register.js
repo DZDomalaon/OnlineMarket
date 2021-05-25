@@ -1,6 +1,5 @@
 $(document).ready(function(){
-    $("#registerbtn").click(function(event){
-      event.preventDefault();
+    $("#registerbtn").click(function(event){      
     });
   });
 
@@ -49,6 +48,7 @@ function addUser()
             },            
         success: function(data){
             console.log(data)
+            alert("Added user successfully!");
         },
         error: function(e){
             console.log(e);

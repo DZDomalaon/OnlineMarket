@@ -74,24 +74,31 @@ function enable_discount() {
 
 $(document).on('submit', '#updateProduct', function(event){
     var base_url = window.location.origin;
+    var id = $('#product_id').val();
+    var available_checkBox = document.getElementById("is_avalable");
+    var discount_checkBox = document.getElementById("is_discounted");
+    var category = document.getElementById("product_category").value;
+    var subcategory = $('#product_subcategory').val();
+
     event.preventDefault();    
-    console.log("pass");    
+    console.log(category);    
     $.ajax({
         method:"post",
         url: base_url + '/products/api/updateproduct/',
         data: {
+            "product": id,
             "product_name": $("#product_name").val(),
-            "product_image": $("#product_image").val(),
+            // "product_image": $("#product_image").val(),  
             "description": $("#description").val(),
             "location": $("#location").val(),
-            // "product_category": JSON.parse(category),
-            // "product_subcategory": JSON.parse(subcategory),
+            "product_category": category,
+            "product_subcategory": subcategory,
             "quantity": $("#quantity").val(),
             // "is_available": available,
             // "is_discounted": discount,            
             "price": $("#price").val(),
             "shipping_fee": $("#shipping_fee").val(),
-            "discount": $("#discount").val(),            
+            "discount": $("#discount").val(),
             "csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
             },            
         enctype: 'multipart/form-data',
@@ -104,3 +111,7 @@ $(document).on('submit', '#updateProduct', function(event){
         }
     });
 });
+
+function setTwoNumberDecimal(event) {
+    this.value = parseFloat(this.value).toFixed(2);
+}

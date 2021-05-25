@@ -35,3 +35,6 @@ class UpdateProductView(TemplateView):
             'instance': instance,
         }
         return render(request, 'products/update_product.html', context)
+
+class ViewProduct(TemplateView):
+    template_name = 'products/product_page.html'    
