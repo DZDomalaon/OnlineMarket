@@ -6,7 +6,8 @@
 #productcard img {
     height: 200px;
     background-clip: padding-box;
-    object-fit: cover;        
+    padding: 10% 10% 10% 10%;
+    margin: 0px auto;  
   }
 
 #productcard {    

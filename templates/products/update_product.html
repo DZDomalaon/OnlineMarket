@@ -8,8 +8,7 @@
 
 {% block content %}
 
-    <div class="container">
-        <input type="hidden" id="product_id" value="{{ instance.pk }}">
+    <div class="container">        
         
         <form id="updateProduct" method="POST" enctype="multipart/form-data">          
             {% csrf_token %}  

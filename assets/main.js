@@ -30,16 +30,16 @@ function load_products() {
             // }
             console.log(data);
             $.each(data, function( index, value ){
-                console.log(value['product_image']);
+                console.log(value['seller']);
                 product_url = base_url + '/products/' + value['id'];
                 demo += "<div class='col-sm-12 col-lg-3'>"+
                             "<div class='card ml-2 mb-2 mt-4 text-center' id='productcard' style='min-width: 15rem;'>" +
                                 "<img src='"+ value['product_image'] +"' class='card-img-top' type='image/webp'>" +
                                 "<div class='card-body'>" +
                                     "<h4 class='card-title'>"+ value['product_name'] + "</h4>" +                                
-                                    "<button type='button' class='btn btn-dark ml-2'> View </button>" +
+                                    "<a class='btn btn-secondary' href='" + product_url + "/viewproduct' type='button' class='btn btn-dark ml-2'> View </a>" +
                                     // if statement                                                                        
-                                    (value['seller_id'] != user ? "<a href='" + product_url + "/viewproduct' role='button' class='btn btn-success ml-2'>Add to Cart</a>" : '')+                                
+                                    (value['seller'] != user ? "<a href='" + product_url + "/viewproduct' role='button' class='btn btn-success ml-2'>Add to Cart</a>" : '')+                                
                                 "</div>" +
                             "</div>"+
                         "</div>";

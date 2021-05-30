@@ -5,7 +5,7 @@ from users.models import CustomUser
 from django.db.models import fields
 from rest_framework import serializers
 from users.serializers import UserSerializer
-from .models import Category, Order, OrderItem, Product, SubCategory
+from .models import Category, Order, OrderItem, OrderPayment, Product, SubCategory
 
 class CategorySerializer(serializers.ModelSerializer):
 
@@ -19,19 +19,21 @@ class SubCategorySerializer(serializers.ModelSerializer):
         model = SubCategory
         fields = ('subcategory_img', 'subcategory')
 
-class ProductSerializer(serializers.ModelSerializer):
-
-    # category = CategorySerializer(source='product_category.category', many=True)
-    # product_subcategory = SubCategorySerializer(source='product_subcategory.subcategory', many=True)
-
+class ProductSerializer(serializers.ModelSerializer):   
+    
     class Meta:
         model = Product
-        fields = ('id','product_name', 'product_image', 'description', 'location', 'price','shipping_fee','discount','is_discounted', 'quantity','is_available', 'seller_id')
+        fields = fields = ('id','product_name', 'product_image', 'description', 'location', 'price','shipping_fee','discount','is_discounted', 'quantity','is_available', 'seller_id')
+
+class ProductsSerializer(serializers.ModelSerializer):   
+    class Meta:
+        model = Product
+        fields = "__all__"
         
 class AddProductSerializer(serializers.ModelSerializer):
     
     product_name = serializers.CharField()
-    # product_image = serializers.ImageField()
+    product_image = serializers.ImageField()
     description = serializers.CharField()
     location = serializers.CharField()
     price = serializers.DecimalField(max_digits=8, decimal_places=2)
@@ -69,8 +71,25 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ('id','date_ordered', 'is_completed')        
 
+
 class OrderItemSerializer(serializers.ModelSerializer):
-    
+        
     class Meta:
         model = OrderItem
         fields = ('id','quantity', 'date_added')
+
+
+class OrderItemCartSerializer(serializers.ModelSerializer):
+    
+    product = ProductSerializer()
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OrderPayment
+        fields = ('amount',)
+

@@ -29,4 +29,7 @@ class UserListView(TemplateView):
 
 class UserCartView(TemplateView):
     template_name = "users/user_cart.html"
+
+class UserPageView(TemplateView):
+    template_name = "users/user_page.html"
     

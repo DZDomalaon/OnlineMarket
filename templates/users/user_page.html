@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="container" id="userpage">
+       
+</div>
+<br>
+<div class="container">
+    <h3>Products</h3>
+    <hr>
+    <div class="row" id="owned">
+    
+    </div>
+</div>
+<br>
+<div class="container">
+    <h3>Cart</h3>
+    <hr>
+    <table class="table table-hover text-center">
+        <thead>
+          <tr>            
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>            
+            <th scope="col">Subtotal</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody id="usercart">
+          
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'users/view_user/js/view_user.js' %}"></script>    
+{% endblock %}

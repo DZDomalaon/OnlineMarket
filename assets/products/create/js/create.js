@@ -1,11 +1,37 @@
 $(document).ready(function(){    
-    document.getElementById("discount").disabled = true;
-    // cat = $('#product_category').val();
-    // alert(cat);
+    document.getElementById("discount").disabled = true;    
+    
+    // $('.scrollable').find(':checkbox:first').click(function () {
+    //     $(this).closest('#categories').find(':checkbox').not(this).attr('disabled', this.checked)
+    // });
+    // $('.scrollable').find('input').click(function () {
+    //     DoWork($(this).closest('.form-check'));
+    // });     
+    
+    $('.scrollable #category input[type=checkbox]').click(function(){        
+        id = $(this).attr('id');        
+        console.log($(this).attr('value'));
+        checked = $(this).attr('checked');            
+
+        if ($(this).is(":checked")) {
+            $('#category input[type=checkbox]').not(this).attr('disabled', true); 
+            $('#sub_category input[type=checkbox]').not(this).attr('disabled', true);                               
+        }
+        else {
+            $("input[type=checkbox]").not(this).removeAttr("disabled", true); 
+        }
+    });         
+       
+    // $("#sub_category input[type=checkbox]").click(function(){
+    //     if ($(this).is(":checked")) {
+    //         $("#sub_category input[type=checkbox]").removeAttr("checked");
+    //         $(this).attr("checked", true);
+    //     }
+    // });
 });
 
 function addProduct()
-{
+{    
     var available_checkBox = document.getElementById("is_avalable");
     var discount_checkBox = document.getElementById("is_discounted");
     var category = $('#product_category').val();
@@ -31,14 +57,13 @@ function addProduct()
     $.ajax({
         type:"POST",
         url: base_url + '/products/api/addproduct/',
-        data: {  
-            // "product": $('form').serializeArray(),     
+        data: {            
             "product_name": $("#product_name").val(),
             "product_image": $("#product_image").val(),
             "description": $("#description").val(),
             "location": $("#location").val(),
-            "product_category": JSON.parse(category),
-            "product_subcategory": JSON.parse(subcategory),
+            "product_category": $('#product_category').val(),
+            "product_subcategory": $('#product_subcategory').val(),
             "quantity": $("#quantity").val(),
             "is_available": available,
             "is_discounted": discount,            
@@ -47,13 +72,12 @@ function addProduct()
             "discount": $("#discount").val(),            
             "csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
             },            
-        enctype: 'multipart/form-data',
         success: function(data){
             console.log(data)
             alert('Successfully Added!')
         },
         error: function(e){
-            console.log(e);
+           alert(e);
         }
     });
 }
@@ -70,34 +94,3 @@ function enable_discount() {
         text.disabled = true;        
     }
 }
-
-// function load_category() {
-
-//     var base_url = window.location.origin;
-
-//     $.ajax({
-//         type:"GET",
-//         url: base_url + '/products/api/getcategory/',     
-//         success: function(data){            
-//             var demo = ""; 
-//             // for (var i = 0; i < data.length; i++) {
-//             //     demo += "<p>"+ data[i].category +"</p>";
-//             // }
-//             $.each(data.categories, function( index, value ){
-//                 console.log(this);
-//                 demo += "<input class='form-check-input' type='checkbox' value='"+ value['category.id'] +"' id='" + value['categories.category'] + "'>" +
-//                         "<label class='form-check-label' for='"+value['categories.id']+ "'>" + value['category'] + '</label><br>' +                        
-//                         "<div class='form-check'>" +
-//                             "<input class='form-check-input' type='checkbox' value='"+ value['subcategory.id'] +"' id='" + value['subcategory'] +"'>" +
-//                             "<label class='form-check-label' for='"+ value['subcategory.id'] +"'>" + value['subcategory'] + '</label><br>' +
-//                         '</div>';
-//             });
-            
-//             document.getElementById("categories").innerHTML = demo;
-//             // $("#categories").html(demo);            
-//         },
-//         error: function(e){
-//             console.log(e);
-//         }
-//     });
-// }

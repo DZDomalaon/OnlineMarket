@@ -28,7 +28,7 @@ class Product(models.Model):
 
     id = models.AutoField(primary_key=True, unique=True)
     product_name = models.CharField(max_length=250)
-    product_image = models.ImageField(blank=True, null=True, upload_to='product/', default='product/default.png')
+    product_image = models.ImageField(upload_to='product/', default='product/default.png')
     description = models.CharField(max_length=250)
     location = models.CharField(max_length=250, blank=True, null=True)  
     product_category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -74,6 +74,7 @@ class OrderPayment(models.Model):
     amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     payment_date = models.DateTimeField(auto_now_add=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    payment_method = models.CharField(max_length=20, default="COD")
     
 # class ProductComment(models.Model):
     

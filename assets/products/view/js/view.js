@@ -14,15 +14,15 @@ function load_product() {
         data: {'product': id},
         success: function(data){                                              
             var demo = "";                                
-            console.log(data['quantity']);
+            console.log(data);
             demo += "<div class='left-column'>"+
-                        "<img src='" + data['product_image'] + "'>" +  
+                        "<img src='" + data['product_image'] + "'>" +                         
                     "</div>"+
                                 
                     "<div class='right-column'>"+
                         
                     "<div class='product-description'>"+
-                        "<span>" + data['product_category'] + "</span>"+
+                        "<span>" + data.product_category + "</span>"+
                         "<h1 id='prod'>" + data['product_name'] + "</h1>"+
                         "<p id='desc'> " + data['description'] + " </p>"+
                     "</div>"+

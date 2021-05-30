@@ -68,14 +68,14 @@
             </label>
             <div class="scrollable">                 
                 {% for category in categories %}               
-                    <div class="form-check" id="categories">
-                        <input class="form-check-input" type="checkbox" value="{{ category.id }}" id="product_category">
+                    <div class="form-check" id="category">
+                        <input class="form-check-input categorycb" type="checkbox" value="{{ category.id }}" id="product_category">
                         <label class="form-check-label" for="product_category">
                             {{ category.category }}
                         </label>
                         {% for sub_category in sub_categories %}
                             {% if sub_category.category == category %}
-                                <div class="form-check">
+                                <div class="form-check" id="sub_category">
                                     <input class="form-check-input" type="checkbox" value="{{ sub_category.id }}" id="product_subcategory">
                                     <label class="form-check-label" for="product_subcategory">
                                         {{ sub_category.subcategory }}

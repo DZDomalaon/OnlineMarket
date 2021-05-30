@@ -10,6 +10,7 @@ urlpatterns = [
     path('dashboard/', views.DashboardView.as_view(), name="dashboard"),
     path('<int:pk>/updateuser/', views.UpdateUserView.as_view(), name="updateuser"),
     path('userlist/', views.UserListView.as_view(), name="userlist"),
+    path('<int:pk>/userpage/', views.UserPageView.as_view(), name="userpage"),
     path('<int:pk>/usercart/', views.UserCartView.as_view(), name="usercart"),
 
     path('api/getuser/', UserViewSet.as_view({'get': 'get'})),

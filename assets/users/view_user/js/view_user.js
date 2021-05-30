@@ -1,17 +1,43 @@
 $(document).ready(function(){    
+    load_user();    
     load_products();
+    load_ordered_products();
 });
 
+user = localStorage.getItem("user_id");
 
-function load_products() {
+function load_user() {
 
-    var base_url = window.location.origin;
+    var base_url = window.location.origin;    
 
     $.ajax({
         type:"GET",
-        url: base_url + '/products/api/ownedproducts/',     
-        contentType: false,
-        processData: false,     
+        data: {"user": user},
+        url: base_url + '/users/api/getuser/',
+        success: function(data){                        
+            var demo = "";
+            console.log(data);             
+            $.each(data, function( index, value ){                                
+                console.log(value);
+                demo += "<h2>"+ value +"</h2>";
+            });
+            
+            document.getElementById("userpage").innerHTML = demo;                       
+        },
+        error: function(e){
+            console.log(e);
+        }
+    });
+}
+
+
+function load_products () {
+    var base_url = window.location.origin;    
+    console.log(user);
+    $.ajax({
+        url: base_url + '/products/api/adminownedproducts/',
+        type:"GET",
+        data:{'user': user},                
         success: function(data){            
             var demo = "";             
             $.each(data, function( index, value ){
@@ -23,8 +49,8 @@ function load_products() {
                                 "<div class='card-body'>" +
                                     "<p class='card-title'>"+ value['product_name'] + "</p>" +
                                     "<p class='card-text text-muted h6'>" + value['location'] + " | " + value['price'] + "</p>" +                                                                        
-                                    "<a class='btn btn-dark ml-1'  id='viewproduct' href='" + product_url + "/productstatus' role='button' onclick='set_product_id(" + value['id'] + ")'>View</a>" +
-                                    "<a class='btn btn-warning ml-2' href='" + product_url + "/updateproduct' role='button' onclick='set_product_id("+ value['id'] +")'>Update</a>" +
+                                    "<a class='btn btn-dark ml-1'  id='viewproduct' href='" + product_url + "/viewproduct' role='button' data-value='" + value['id'] + "' onclick='send_product(event, " + value['id'] + ")'>View</a>" +
+                                    "<a class='btn btn-warning ml-2' href='" + product_url + "/updateproduct' role='button'>Update</a>" +
                                     "<button class='btn btn-danger ml-2' data-toggle='modal' data-target='#deleteModal"+value['id']+"'>Delete</button>" +
                                 "</div>" +
                             "</div>" +
@@ -53,49 +79,31 @@ function load_products() {
     });
 }
 
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-const csrftoken = getCookie('csrftoken');
-
-function delete_product(){
-
+function load_ordered_products() {
     var base_url = window.location.origin;
-    var id = $('#deletebtn').val();
-    console.log(id);
-    
+
     $.ajax({
-        type:"DELETE",
-        url: base_url + '/products/api/deleteproduct/',
-        data: {"product": id,
-               "csrfmiddlewaretoken": csrftoken},
+        type:"GET",
+        url: base_url + '/products/api/adminorderedproducts/',     
+        data:{'user': user}    ,
         success: function(data){            
-            
-            console.log(data);                                   
+            var demo = "";
+            console.log(data);             
+            $.each(data, function( index, value ){
+                
+                console.log(value.quantity); 
+                demo += "<tr>"+
+                            "<td>"+value['product'].product_name+"</td>"+
+                            "<td><input type='number' name='points' step='1' value='"+value.quantity+"' onchange='quantity_change()'></td>"+                                                      
+                            "<td>"+value.quantity * value.product.price+"</td>"+
+                            "<td><button class='btn btn-warning' id='updatebtn' style='display: none'>Update</button></td>"+
+                        "</tr>";
+                                
+            });            
+            document.getElementById("usercart").innerHTML = demo;                       
         },
         error: function(e){
             console.log(e);
         }
     });
 }
-
-function set_product_id(data) {    
-    console.log($(this).data("value"));
-    localStorage.setItem("product_id", JSON.stringify( data ));    
-}
-
-
-
-

@@ -13,9 +13,9 @@
 }
 
 .left-column img {
-    width: 80%;
+    width: 65%;
     position: absolute;
-    left: 0;
+    left: 100px;
     padding: 5px;
     top: 0;
     height: 100%; 
