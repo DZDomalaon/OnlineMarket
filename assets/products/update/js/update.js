@@ -25,6 +25,20 @@ $(document).on('submit', '#updateProduct', function(event){
     var category = document.getElementById("product_category").value;
     var subcategory = $('#product_subcategory').val();
 
+    if (discount_checkBox.checked == true){
+        discount = true;
+    }
+    else{
+        discount = false
+    }
+
+    if (available_checkBox.checked == true){
+        available = true;
+    }
+    else{
+        available = false
+    }
+
     event.preventDefault();    
     console.log(category);    
     $.ajax({
@@ -39,8 +53,8 @@ $(document).on('submit', '#updateProduct', function(event){
             "product_category": category,
             "product_subcategory": subcategory,
             "quantity": $("#quantity").val(),
-            // "is_available": available,
-            // "is_discounted": discount,            
+            "is_available": available,
+            "is_discounted": discount,            
             "price": $("#price").val(),
             "shipping_fee": $("#shipping_fee").val(),
             "discount": $("#discount").val(),

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from products.models import Product, SubCategory
+from products.models import Category, Product, SubCategory
 from django.views.generic.base import TemplateView
 
 
@@ -20,7 +20,8 @@ class DashboardView(TemplateView):
     def get(self, request, *args, **kwargs):
         products = Product.objects.all()
         sub_categories = SubCategory.objects.all()
-        return render(request, "dashboard.html", {'products': products, 'sub_categories': sub_categories})
+        categories = Category.objects.all()
+        return render(request, "dashboard.html", {'products': products, 'categories': categories, 'sub_categories': sub_categories})
 
 
 class UserListView(TemplateView):
@@ -32,4 +33,10 @@ class UserCartView(TemplateView):
 
 class UserPageView(TemplateView):
     template_name = "users/user_page.html"
+
+class UserPayment(TemplateView):
+    template_name = "users/user_payment.html"
+
+class OrderStatus(TemplateView):
+    template_name = "users/order_status.html"
     

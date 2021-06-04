@@ -1,0 +1,77 @@
+{% include 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'products/payment/css/payment.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- For demo purpose -->
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
+                        
+                        <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
+                            <li class="nav-item"> <a id="card" data-toggle="pill" href="#credit-card" class="nav-link active ">Credit Card </a> </li>
+                            <li class="nav-item"> <a id="cod" data-toggle="pill" href="#COD" class="nav-link ">Cash on Delivery </a> </li>                            
+                        </ul>
+                    </div> 
+                    
+                    <div class="tab-content">
+
+                        <div id="credit-card" class="tab-pane fade show active pt-3">
+                            <form id="cardform" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group"> <label for="name">
+                                        <h6>Card Owner</h6>
+                                    </label> <input type="text" id="name" placeholder="Card Owner Name" required class="form-control "> </div>
+                                <div class="form-group"> <label for="cardNumber">
+                                        <h6>Card number</h6>
+                                    </label>
+                                    <div class="input-group"> <input type="text" id="cardNumber" placeholder="Valid card number" class="form-control " required>
+                                        <div class="input-group-append"> <span class="input-group-text text-muted"> </span> </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="form-group"> <label><span class="hidden-xs">
+                                                    <h6>Expiration Date</h6>
+                                                </span></label>
+                                            <div class="input-group"> <input type="number" placeholder="MM" id="expire_m" class="form-control" required> <input type="number" placeholder="YY" id="expire_y" class="form-control" required> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                                                <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                            </label> <input id="cvv" type="text" required class="form-control"> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer"> <button id="Cardbtn" type="submit" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Payment </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div id="COD" class="tab-pane fade pt-3">
+                        <form id="CODform" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group"> <label for="address">
+                                <h6 class="pb-2">Enter your Address</h6>
+                            </label> <input type="text" id="address" placeholder="Address" required class="form-control "> </div> 
+                            <p class="text-muted">After completing the payment process, you will be redirected back to the website to view details of your order. </p>
+                            <div class="card-footer"> <button id="CODbtn" type="submit" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Payment </button>
+                        </form>                                                                   
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'products/payment/js/payment.js' %}"></script>
+{% endblock %}

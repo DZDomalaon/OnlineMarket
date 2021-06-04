@@ -69,6 +69,7 @@ class Order(models.Model):
     def __str__(self):
         return str(self.date_ordered)
 
+
 class OrderPayment(models.Model):
 
     amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
@@ -76,13 +77,17 @@ class OrderPayment(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     payment_method = models.CharField(max_length=20, default="COD")
     
-# class ProductComment(models.Model):
-    
-#     comment = models.CharField(max_length=250)
-#     date_created = models.DateTimeField(auto_now_add=True)        
-#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)    
 
-#     def __str__(self):
-#         return self.comment
+class CODPayment(models.Model):
+
+    address = models.CharField(max_length=100)    
+    order_payment = models.ForeignKey(OrderPayment, on_delete=models.CASCADE)
+
+class CardPayment(models.Model):
+    
+    name = models.CharField(max_length=50)
+    card_number = models.IntegerField()
+    cvv = models.IntegerField()
+    expiration = models.CharField(max_length=10)    
+    order_payment = models.ForeignKey(OrderPayment, on_delete=models.CASCADE)
 

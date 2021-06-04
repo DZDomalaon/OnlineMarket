@@ -2,26 +2,51 @@
 {% load static %}
 
 {% block head%}
+  <link rel="stylesheet" type="text/css" href="{% static 'products/status/css/style.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <table class="table table-hover text-center">
+  <div class="row">    
+    <div class="col-md-5">
+      <h4>Stock</h4>
+      <table class="table table-hover text-center">
+        <thead>
+          <tr>            
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>            
+            <th scope="col">Stockin Value</th>
+            <th scope="col"></th> 
+  
+          </tr>
+        </thead>
+        <tbody id="product-stock">
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-7">
+      <h4>Orders</h4>
+      <table class="table table-hover text-center">
         <thead>
           <tr>            
             <th scope="col">Product</th>
             <th scope="col">Quantity</th>            
             <th scope="col">Date Ordered</th> 
-            <th scope="col">Shipping Status</th>
-            <th scope="col">Shipping Duration</th>
+            <th scope="col">Is Shipping</th>
+            <th scope="col">Ship Duration</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody id="product-status">
           
         </tbody>
+      </table>
+    </div>
+  </div>      
 </div>
 {% endblock %}
 
 {% block extra_js %}
-    <script type="text/javascript" src="{% static 'products/status/js/status.js' %}"></script>
+  <script type="text/javascript" src="{% static 'products/status/js/status.js' %}"></script>
 {% endblock %}

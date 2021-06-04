@@ -10,6 +10,19 @@ class OwnedProductsView(TemplateView):
         owned_products = Product.objects.filter(seller=request.user)
         return render(request, "products/owned_products.html", {'current_user': current_user, 'owned_products': owned_products})
 
+
+class ShowCategoryView(TemplateView):
+    
+    def get(self, request):
+        categories = Category.objects.all()
+        sub_categories = SubCategory.objects.all()
+
+        context = {
+            'categories': categories,
+            'sub_categories': sub_categories,
+        }
+        return render(request, 'dashboard.html', context)
+
 class CreateProductView(TemplateView):    
     
     def get(self, request, *args, **kwargs):
@@ -21,6 +34,7 @@ class CreateProductView(TemplateView):
             'sub_categories': sub_categories,
         }
         return render(request, 'products/create_product.html', context)
+
 
 class UpdateProductView(TemplateView):    
     
@@ -42,3 +56,7 @@ class ViewProduct(TemplateView):
 
 class ProductStatusView(TemplateView):
     template_name = "products/product_status.html"
+
+
+class UnderCategory(TemplateView):
+    template_name = "products/under_category.html"

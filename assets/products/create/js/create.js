@@ -8,19 +8,19 @@ $(document).ready(function(){
     //     DoWork($(this).closest('.form-check'));
     // });     
     
-    $('.scrollable #category input[type=checkbox]').click(function(){        
-        id = $(this).attr('id');        
-        console.log($(this).attr('value'));
-        checked = $(this).attr('checked');            
+    // $('#category input[type=checkbox]').click(function(){        
+    //     id = $(this).attr('id');        
+    //     console.log($(this).attr('value'));
+    //     checked = $(this).attr('checked');            
 
-        if ($(this).is(":checked")) {
-            $('#category input[type=checkbox]').not(this).attr('disabled', true); 
-            $('#sub_category input[type=checkbox]').not(this).attr('disabled', true);                               
-        }
-        else {
-            $("input[type=checkbox]").not(this).removeAttr("disabled", true); 
-        }
-    });         
+    //     if ($(this).is(":checked")) {
+    //         $('#category input[type=checkbox]').not(this).attr('disabled', true); 
+    //         $('#sub_category input[type=checkbox]').not(this).attr('disabled', true);                               
+    //     }
+    //     else {
+    //         $("input[type=checkbox]").not(this).removeAttr("disabled", true); 
+    //     }
+    // });         
        
     // $("#sub_category input[type=checkbox]").click(function(){
     //     if ($(this).is(":checked")) {
@@ -30,8 +30,30 @@ $(document).ready(function(){
     // });
 });
 
-function addProduct()
-{    
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+$("#target").click(function() {
+    alert( "Handler for .click() called." );
+});
+
+$(document).on('submit', '#addproduct', function(event){
+
     var available_checkBox = document.getElementById("is_avalable");
     var discount_checkBox = document.getElementById("is_discounted");
     var category = $('#product_category').val();
@@ -53,11 +75,35 @@ function addProduct()
         available = false
     }
     var base_url = window.location.origin;
+    event.preventDefault();
     
+    // var formData = new FormData();
+    // formData.append("product_image", $("#product_image").prop('files')[0]);
+    // formData.append("product_name", $("#product_name").val()); 
+    // formData.append("description", $("#description").val());
+    // formData.append("location", $("#location").val());
+    // formData.append("product_category", $('#product_category').val());
+    // formData.append("product_subcategory", $('#product_subcategory').val());
+    // formData.append("quantity", $("#quantity").val());
+    // formData.append("is_available", available);
+    // formData.append("is_discounted", discount);
+    // formData.append("price", $("#price").val());
+    // formData.append("shipping_fee", $("#shipping_fee").val());
+    // formData.append("discount", $("#discount").val());
+
+    // $.ajaxSetup({
+    //     headers: {                                                           
+    //         'X-CSRF-Token': getCookie('csrftoken'),
+    //     }
+    //   });
+
     $.ajax({
         type:"POST",
         url: base_url + '/products/api/addproduct/',
-        data: {            
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('input[name="csrfmiddlewaretoken"]').val())
+        },
+        data:{
             "product_name": $("#product_name").val(),
             "product_image": $("#product_image").val(),
             "description": $("#description").val(),
@@ -69,18 +115,18 @@ function addProduct()
             "is_discounted": discount,            
             "price": $("#price").val(),
             "shipping_fee": $("#shipping_fee").val(),
-            "discount": $("#discount").val(),            
-            "csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(),
-            },            
+            "discount": $("#discount").val(),
+            "csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(), 
+        },                                            
         success: function(data){
             console.log(data)
             alert('Successfully Added!')
         },
         error: function(e){
-           alert(e);
+            console.log(e);
         }
     });
-}
+});
 
 function enable_discount() {
 

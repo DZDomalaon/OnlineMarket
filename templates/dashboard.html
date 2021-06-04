@@ -9,10 +9,26 @@
 <div class=container>    
     <input  type="hidden" value="{{ request.user.id }}" id="auth_user">
     <nav class="navbar navbar-light justify-content-center mt-4">
-        <form class="form-inline">
+        <div class="form-inline">            
+            <label for="category">Category &nbsp;</label>
+            <select class="form-control text-center" id="category">
+                <option value="">All</option>                
+                {% for category in categories %}
+                    <option value="{{ category.category }}">{{ category.category }}</option>
+                {% endfor %}
+            </select>  
+            <label for="subcategory">&nbsp; Subcategory &nbsp;</label>
+            <select class="form-control text-center" id="subcategory">
+                <option value="">All</option>
+                {% for subcategory in sub_categories %}
+                    <option value="{{ subcategory.subcategory }}">{{ subcategory.subcategory }}</option>
+                {% endfor %}
+            </select>  
+            &nbsp;          
             <!-- <button type="button" class="btn btn-primary btn-lg mr-3" id="btnSort">Sort</button> -->
-            <input class="form-control form-control-lg mr-sm-2" type="search" placeholder="Search Product" aria-label="Search" id="search">            
-        </form>
+            
+            <input class="form-control mr-sm-2" type="search" placeholder="Search Product" aria-label="Search" id="search" onchange="search()">            
+        </div>
     </nav>
     <br>
     <h3>Featured Items </h3>
@@ -33,17 +49,19 @@
     <br>   
     <h3>Sale Items</h3>
     <hr>
-    <div class="row">  
-       
+    <div class="row layout-margin-8 mt-4">  
+        <div class="card-deck" id="sale">
+
+        </div>
     </div>          
     <br>   
     <h3>Category</h3>    
     <hr>
-    <div class="row">        
-        
-        <div>
+    <div class="row layout-margin-8 mt-4">  
+        <div class="card-deck" id="categories">
+
         </div>
-    </div>    
+    </div>  
 </div>
 
 

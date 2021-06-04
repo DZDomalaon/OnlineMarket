@@ -18,14 +18,13 @@ function load_products() {
                 product_url = base_url + '/products/' + value['id'];
                 console.log(value);
                 demo += "<div class='col-sm-12 col-lg-3'>" + 
-                            "<div class='card mb-2 mt-4' id='productcard' style='width: 17rem;'>" +
+                            "<div class='card mb-2 mt-4 text-center'' id='productcard' style='width: 17rem;'>" +
                                 "<img src='"+ value['product_image'] +"' class='card-img-top'>" +
                                 "<div class='card-body'>" +
                                     "<p class='card-title'>"+ value['product_name'] + "</p>" +
                                     "<p class='card-text text-muted h6'>" + value['location'] + " | " + value['price'] + "</p>" +                                                                        
                                     "<a class='btn btn-dark ml-1'  id='viewproduct' href='" + product_url + "/productstatus' role='button' onclick='set_product_id(" + value['id'] + ")'>View</a>" +
-                                    "<a class='btn btn-warning ml-2' href='" + product_url + "/updateproduct' role='button' onclick='set_product_id("+ value['id'] +")'>Update</a>" +
-                                    "<button class='btn btn-danger ml-2' data-toggle='modal' data-target='#deleteModal"+value['id']+"'>Delete</button>" +
+                                    "<a class='btn btn-warning ml-2' href='" + product_url + "/updateproduct' role='button' onclick='set_product_id("+ value['id'] +")'>Update</a>" +                                    
                                 "</div>" +
                             "</div>" +
                         "</div>"+

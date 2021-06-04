@@ -7,36 +7,45 @@
 
 {% block content %}
 <div class="container">	
+	
   	<div class="center">  
-		<form id="registerform">
+		<form id="registerform" class="needs-validation" novalidate>
 			{% csrf_token %}      			
-			<h2 class="d-flex justify-content-center">Register</h2>					
+			<h2 class="d-flex justify-content-center">Register</h2>
+			<div id="success" class="alert alert-success hidden" role="alert">
+				
+			</div>					
 			<div class="row align-items-center mb-2 mt-2">
 
-					<label for="first-name">First Name</label>
-					<input type="text" class="form-control" id="first_name" placeholder="First Name">
+				<label for="first-name">First Name</label>
+				<input type="text" class="form-control" id="first_name" placeholder="First Name" required>
+				<div class="invalid-feedback">Please enter firstname.</div>
 
-					<label for="last-name">Last Name</label>
-					<input type="text" class="form-control" id="last_name" placeholder="Last Name">
+				<label for="last-name">Last Name</label>
+				<input type="text" class="form-control" id="last_name" placeholder="Last Name" required>
+				<div class="invalid-feedback">Please enter lastname.</div>
 
-					<label for="email">Email address</label>
-					<input type="email" class="form-control" id="email" placeholder="Enter Email">
-					<span id="error" style="display:none;color:red;">Wrong email</span>
+				<label for="email">Email address</label>
+				<input type="email" class="form-control" id="email" placeholder="Enter Email" required>
+				<div class="invalid-feedback">Please enter email.</div>	
+				<span id="error" style="display:none;color:red;">Wrong email</span>
+				
 
-					<label for="password">Password</label>
-					<input type="password" class="form-control" id="password" placeholder="Password">				
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Password" required>		
+				<div class="invalid-feedback">Please enter password.</div>		
 
 				<label for="password2">Confirm Password</label>
-				<input type="password" class="form-control" id="password2">
+				<input type="password" class="form-control" id="password2" required>
 				<span id='message'></span>
-
+				<br>
 				<div class="form-check mt-2">				
 					<input type="checkbox" class="form-check-input" id="is_seller">				
 					<label class="form-check-label" for="is-is_seller">Is Seller</label>
 				</div>
 			</div>						
 			<div class="text-center">
-				<button class="btn btn-primary" onclick="addUser()" type="submit" id="registerbtn">Register</button>     
+				<button class="btn btn-primary" type="submit" id="registerbtn">Register</button>     
 			</div>	 			      			                       
 		</form>
 	</div> 	

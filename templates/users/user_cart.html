@@ -7,12 +7,16 @@
 
 {% block content %}
 <div class="container">
+  <input  type="hidden" value="{{ request.user.id }}" id="auth_user">
   <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-center row">
       <div class="col-md-8">
         <div class="p-2">
             <h4>Shopping cart</h4>              
-        </div>       
+        </div>
+        <div id='success' class='alert alert-success' role='alert' style='display: none'>
+            
+        </div>     
         <div id="usercart">
 
         </div>
@@ -21,7 +25,7 @@
           
         </div>        
         <div id="updatebtn" class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded">
-          <button type="submit" class="btn btn-warning btn-block btn-lg ml-2 pay-button text-white" onclick="add_payment()">Proceed to Pay</button>
+          <a class="btn btn-warning btn-block btn-lg ml-2 pay-button text-white" href="{% url 'users:payment' user.id %}">Proceed to Pay</a>
         </div>
       </div>
     </div>  

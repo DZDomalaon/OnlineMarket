@@ -12,6 +12,8 @@ urlpatterns = [
     path('userlist/', views.UserListView.as_view(), name="userlist"),
     path('<int:pk>/userpage/', views.UserPageView.as_view(), name="userpage"),
     path('<int:pk>/usercart/', views.UserCartView.as_view(), name="usercart"),
+    path('<int:pk>/payment/', views.UserPayment.as_view(), name="payment"),
+    path('<int:pk>/orderstatus/', views.OrderStatus.as_view(), name="orderstatus"),
 
     path('api/getuser/', UserViewSet.as_view({'get': 'get'})),
     path('api/getusers/', UserViewSet.as_view({'get': 'userlist'})),    

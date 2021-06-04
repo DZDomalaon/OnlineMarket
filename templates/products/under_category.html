@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head%}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <input  type="hidden" value="{{ request.user.id }}" id="auth_user">
+    <br>
+    <h3>Items </h3>
+    <hr>
+    <div class="row layout-margin-8 mt-4">  
+        <div class="card-deck" id="products">
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'products/under_category/js/under_category.js' %}"></script>
+{% endblock %}
+
+    

@@ -26,12 +26,12 @@ class UserViewSet(viewsets.ViewSet):
         return Response(serializer.data, status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        
-        serializer = RegistrationSerializer(data=request.data)        
                 
+        serializer = RegistrationSerializer(data=request.data)                
         if serializer.is_valid():
             serializer.save()        
-        return Response({'serializer': serializer.data})
+            return Response({'serializer': serializer.data})
+        return Response({'errors': serializer.errors})
 
     def update_user(self, request):
 
@@ -53,14 +53,14 @@ class UserViewSet(viewsets.ViewSet):
         password = data.get('password', None)
 
         user = authenticate(username=username, password=password)
-        token = user.auth_token.key
-        
+                        
         if user is not None:
+            token = user.auth_token.key
             login(request, user)                
 
-            return Response({'token': token}, status=200)
+            return Response(status.HTTP_200_OK)
         else:
-            return Response(status=404)
+            return Response({'error': "Incorrect email or password."})
 
     def userlogout(self, request):
         logout(request)

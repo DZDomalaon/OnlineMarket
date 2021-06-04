@@ -9,7 +9,7 @@
 {% block content %}
 
     <div class="container">
-        <form id="addproduct" enctype="multipart/form-data">          
+        <form id="addproduct" metohd="post" enctype="multipart/form-data">          
             {% csrf_token %}  
             <div class="leftside">
                 <div class="form-row">
@@ -49,18 +49,18 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="price">Price</label>
-                        <input type="text" class="form-control" id="price" onchange="setTwoNumberDecimal" min="0" max="10" step="0.25" value="0.00">
+                        <input type="text" class="form-control" id="price" min="0" max="10" step="0.25" value="0.00">
                     </div>                    
                     <div class="form-group col-md-4">
                         <label for="shipping_fee">Shipping Fee</label>
-                        <input type="text" class="form-control" id="shipping_fee" onchange="setTwoNumberDecimal" min="0" max="10" step="0.25" value="0.00">
+                        <input type="text" class="form-control" id="shipping_fee"  min="0" max="10" step="0.25" value="0.00">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="discount">Discount</label>
-                        <input type="text" class="form-control" id="discount" onchange="setTwoNumberDecimal" min="0" max="10" step="0.25" value="0.00">
+                        <input type="text" class="form-control" id="discount"  min="0" max="10" step="0.25" value="0.00">
                     </div>
                 </div>               
-                <button type="submit" class="btn btn-primary" onclick="addProduct()">Add Product</button>
+                <button type="submit" class="btn btn-primary">Add Product</button>
             </div>
             
             <label class="ml-2" for="categories">

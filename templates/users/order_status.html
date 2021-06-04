@@ -1,0 +1,29 @@
+{% include 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="container">    
+    <h4>Orders</h4>
+    <table class="table table-hover text-center">
+        <thead>
+        <tr>            
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>            
+            <th scope="col">Date Ordered</th> 
+            <th scope="col">Status</th>               
+        </tr>
+        </thead>
+        <tbody id="order-status">
+        
+        </tbody>
+    </table>       
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'products/order_status/js/order_status.js' %}"></script>
+{% endblock %}
