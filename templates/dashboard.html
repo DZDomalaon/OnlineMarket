@@ -14,14 +14,14 @@
             <select class="form-control text-center" id="category">
                 <option value="">All</option>                
                 {% for category in categories %}
-                    <option value="{{ category.category }}">{{ category.category }}</option>
+                    <option value="{{ category.name }}">{{ category.name }}</option>
                 {% endfor %}
             </select>  
             <label for="subcategory">&nbsp; Subcategory &nbsp;</label>
             <select class="form-control text-center" id="subcategory">
                 <option value="">All</option>
                 {% for subcategory in sub_categories %}
-                    <option value="{{ subcategory.subcategory }}">{{ subcategory.subcategory }}</option>
+                    <option value="{{ subcategory.name }}">{{ subcategory.name }}</option>
                 {% endfor %}
             </select>  
             &nbsp;          

@@ -36,7 +36,7 @@ class ProductsSerializer(serializers.ModelSerializer):
 class AddProductSerializer(serializers.ModelSerializer):
     
     product_name = serializers.CharField()
-    # product_image = serializers.ImageField()
+    product_image = serializers.ImageField()
     description = serializers.CharField()
     location = serializers.CharField()
     price = serializers.DecimalField(max_digits=8, decimal_places=2)
@@ -48,7 +48,7 @@ class AddProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('product_name', 'description', 'location', 'price', 'product_category', 'product_subcategory','shipping_fee','discount','is_discounted', 'quantity','is_available')
+        fields = ('product_name', 'product_name', 'product_image','description', 'location', 'price', 'product_category', 'product_subcategory','shipping_fee','discount','is_discounted', 'quantity','is_available')
 
 
 class AddStock(serializers.Serializer):
@@ -60,7 +60,7 @@ class AddStock(serializers.Serializer):
 class UpdateProductSerializer(serializers.ModelSerializer):
     
     product_name = serializers.CharField()
-    # product_image = serializers.ImageField()
+    product_image = serializers.ImageField()
     description = serializers.CharField()
     location = serializers.CharField()
     price = serializers.DecimalField(max_digits=8, decimal_places=2)
@@ -72,7 +72,7 @@ class UpdateProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('product_name', 'description', 'location', 'price','shipping_fee','discount','is_discounted', 'quantity','is_available')              
+        fields = ('product_name', 'product_image', 'description', 'location', 'price','shipping_fee','discount','is_discounted', 'quantity','is_available')              
 
 class OrderItemSerializer(serializers.ModelSerializer):
     

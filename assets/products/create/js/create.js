@@ -28,25 +28,24 @@ $(document).ready(function(){
     //         $(this).attr("checked", true);
     //     }
     // });
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
 });
-
-
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-const csrftoken = getCookie('csrftoken');
 
 $("#target").click(function() {
     alert( "Handler for .click() called." );
@@ -54,10 +53,12 @@ $("#target").click(function() {
 
 $(document).on('submit', '#addproduct', function(event){
 
+    var base_url = window.location.origin;
+    event.preventDefault();    
     var available_checkBox = document.getElementById("is_avalable");
     var discount_checkBox = document.getElementById("is_discounted");
-    var category = $('#product_category').val();
-    var subcategory = $('#product_subcategory').val();
+    var category =  localStorage.getItem("category_id");
+    var subcategory = localStorage.getItem("subcategory_id");
     var discount = false;
     var available = false;
 
@@ -74,50 +75,30 @@ $(document).on('submit', '#addproduct', function(event){
     else{
         available = false
     }
-    var base_url = window.location.origin;
-    event.preventDefault();
     
-    // var formData = new FormData();
-    // formData.append("product_image", $("#product_image").prop('files')[0]);
-    // formData.append("product_name", $("#product_name").val()); 
-    // formData.append("description", $("#description").val());
-    // formData.append("location", $("#location").val());
-    // formData.append("product_category", $('#product_category').val());
-    // formData.append("product_subcategory", $('#product_subcategory').val());
-    // formData.append("quantity", $("#quantity").val());
-    // formData.append("is_available", available);
-    // formData.append("is_discounted", discount);
-    // formData.append("price", $("#price").val());
-    // formData.append("shipping_fee", $("#shipping_fee").val());
-    // formData.append("discount", $("#discount").val());
-
-    // $.ajaxSetup({
-    //     headers: {                                                           
-    //         'X-CSRF-Token': getCookie('csrftoken'),
-    //     }
-    //   });
+    var formData = new FormData();
+    formData.append("product_image", $("#product_image").prop('files')[0]);
+    formData.append("product_name", $("#product_name").val()); 
+    formData.append("description", $("#description").val());
+    formData.append("location", $("#location").val());
+    formData.append("product_category", category);
+    formData.append("product_subcategory", subcategory);
+    formData.append("quantity", $("#quantity").val());
+    formData.append("is_available", available);
+    formData.append("is_discounted", discount);
+    formData.append("price", $("#price").val());
+    formData.append("shipping_fee", $("#shipping_fee").val());
+    formData.append("discount", $("#discount").val());
 
     $.ajax({
         type:"POST",
+        processData: false,
+        contentType: false,
         url: base_url + '/products/api/addproduct/',
         beforeSend: function(xhr) {
-            xhr.setRequestHeader('X-CSRF-Token', $('input[name="csrfmiddlewaretoken"]').val())
+            xhr.setRequestHeader('X-CSRFToken', $('input[name="csrfmiddlewaretoken"]').val())
         },
-        data:{
-            "product_name": $("#product_name").val(),
-            "product_image": $("#product_image").val(),
-            "description": $("#description").val(),
-            "location": $("#location").val(),
-            "product_category": $('#product_category').val(),
-            "product_subcategory": $('#product_subcategory').val(),
-            "quantity": $("#quantity").val(),
-            "is_available": available,
-            "is_discounted": discount,            
-            "price": $("#price").val(),
-            "shipping_fee": $("#shipping_fee").val(),
-            "discount": $("#discount").val(),
-            "csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val(), 
-        },                                            
+        data: formData,                                                       
         success: function(data){
             console.log(data)
             alert('Successfully Added!')
@@ -139,4 +120,12 @@ function enable_discount() {
     else {
         text.disabled = true;        
     }
+}
+
+function set_category_id(data) {        
+    localStorage.setItem("category_id", data);    
+}
+
+function set_subcategory_id(data) {        
+    localStorage.setItem("subcategory_id", data);    
 }

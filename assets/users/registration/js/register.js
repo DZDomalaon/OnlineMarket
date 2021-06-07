@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $("#registerbtn").click(function(event){      
     });
+    
     (function() {
         'use strict';
         window.addEventListener('load', function() {
@@ -20,7 +21,7 @@ $(document).ready(function(){
     })();
 
     document.getElementById("success").style.display = "none";
-  });
+});
 
 
 $('#email').on('keypress', function() {

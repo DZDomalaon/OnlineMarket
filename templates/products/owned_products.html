@@ -8,7 +8,7 @@
 {% block content %}
   
   <div class="container">    
-         
+    {{ request.user.id|json_script:"user_id" }}
     <a href="{% url 'products:createproduct' user.id %}" class="btn btn-dark">
       Add Product
     </a>

@@ -7,21 +7,21 @@ from users.models import CustomUser
 
 class Category(models.Model):
 
-    category = CharField(max_length=50)
+    name = CharField(max_length=50)
     slug = SlugField(max_length=50, unique=True)
 
     def __str__(self):
-        return self.category
+        return self.name
 
 
 class SubCategory(models.Model):
 
     subcategory_img = models.ImageField(blank=True, null=True, upload_to='category/', default='default.png')
-    subcategory = CharField(max_length=50)
+    name = CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.subcategory
+        return self.name
         
 
 class Product(models.Model):
@@ -44,7 +44,7 @@ class Product(models.Model):
     seller = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.product_name
+        return str(self.id)
 
 
 class OrderItem(models.Model):

@@ -9,31 +9,35 @@
 {% block content %}
 
     <div class="container">
-        <form id="addproduct" metohd="post" enctype="multipart/form-data">          
+        <form id="addproduct" class="needs-validation" enctype="multipart/form-data" novalidate>          
             {% csrf_token %}  
             <div class="leftside">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="product_name">Product Name</label>
-                        <input type="text" class="form-control" id="product_name" placeholder="Product">
+                        <input type="text" class="form-control" id="product_name" placeholder="Product" required>
+                        <div class="invalid-feedback">Please enter product name.</div>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="product_image">Product Image</label>
-                        <input type="file" class="form-control-file" id="product_image">
+                        <input type="file" class="form-control-file" id="product_image">                        
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="description">Product Description</label>
-                    <input type="text" class="form-control" id="description">
+                    <input type="text" class="form-control" id="description" required>
+                    <div class="invalid-feedback">Please enter product description.</div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="location">Product Location</label>
-                        <input type="text" class="form-control" id="location" placeholder="ex: Manila">
+                        <input type="text" class="form-control" id="location" placeholder="ex: Manila" required>
+                        <div class="invalid-feedback">Please enter product location.</div>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="quantity">Quantity</label>
-                        <input type="text" class="form-control" id="quantity">
+                        <input type="text" class="form-control" id="quantity" required>
+                        <div class="invalid-feedback">Please enter product quantity.</div>
                     </div>
                 </div>      
                 <div class="form-row">
@@ -49,7 +53,8 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="price">Price</label>
-                        <input type="text" class="form-control" id="price" min="0" max="10" step="0.25" value="0.00">
+                        <input type="text" class="form-control" id="price" min="0" max="10" step="0.25" value="0.00" required>
+                        <div class="invalid-feedback">Please enter product price.</div>
                     </div>                    
                     <div class="form-group col-md-4">
                         <label for="shipping_fee">Shipping Fee</label>
@@ -69,17 +74,17 @@
             <div class="scrollable">                 
                 {% for category in categories %}               
                     <div class="form-check" id="category">
-                        <input class="form-check-input categorycb" type="checkbox" value="{{ category.id }}" id="product_category">
+                        <input class="form-check-input categorycb" type="checkbox" value="{{ category.id }}" onclick="set_category_id('{{ category.id }}')" id="product_category" >
                         <label class="form-check-label" for="product_category">
-                            {{ category.category }}
+                            {{ category.name }}
                         </label>
                         {% for sub_category in sub_categories %}
                             {% if sub_category.category == category %}
                                 <div class="form-check" id="sub_category">
-                                    <input class="form-check-input" type="checkbox" value="{{ sub_category.id }}" id="product_subcategory">
+                                    <input class="form-check-input" type="checkbox" value="{{ sub_category.id }}" onclick="set_subcategory_id('{{ sub_category.id }}')" id="product_subcategory">
                                     <label class="form-check-label" for="product_subcategory">
-                                        {{ sub_category.subcategory }}
-                                    </label>
+                                        {{ sub_category.name }}
+                                    </label>                                    
                                 </div>
                             {% endif %}
                         {% endfor %}             

@@ -70,6 +70,7 @@ function load_products() {
 
 function addStock(){    
     
+    var product = localStorage.getItem('product_id');
     var base_url = window.location.origin;
 
     $.ajax({

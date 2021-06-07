@@ -9,93 +9,102 @@
 {% block content %}
 
     <div class="container">        
-        
-        <form id="updateProduct" method="POST" enctype="multipart/form-data">          
-            {% csrf_token %}  
-            <div class="leftside">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="product_name">Product Name</label>
-                        <input type="text" class="form-control" id="product_name" placeholder="Product" value="{{ instance.product_name }}">
+        {% if instance.seller == request.user %}
+            <form id="updateProduct" method="POST" enctype="multipart/form-data">          
+                {% csrf_token %}  
+                <div class="leftside">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="product_name">Product Name</label>
+                            <input type="text" class="form-control" id="product_name" placeholder="Product" value="{{ instance.product_name }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="product_image">Product Image</label>
+                            <input type="file" class="form-control-file" id="product_image" value="{{ instance.product_image }}">
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="product_image">Product Image</label>
-                        <input type="file" class="form-control-file" id="product_image" value="{{ instance.product_image }}">
+                    <div class="form-group">
+                        <label for="description">Product Description</label>
+                        <input type="text" class="form-control" id="description" value="{{ instance.description }}">
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="description">Product Description</label>
-                    <input type="text" class="form-control" id="description" value="{{ instance.description }}">
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="location">Product Location</label>
-                        <input type="text" class="form-control" id="location" placeholder="ex: Manila" value="{{ instance.location }}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="quantity">Quantity</label>
-                        <input type="text" class="form-control" id="quantity" value="{{ instance.quantity }}">
-                    </div>
-                </div>      
-                <div class="form-row">
-                    <div class="form-group col-md-4 ml-4">
-                        {% if instance.is_avalable == 'True' %}
-                            <input class="form-check-input" type="checkbox" value="" id="is_avalable" checked>
-                        {% else %}
-                            <input class="form-check-input" type="checkbox" value="" id="is_avalable">
-                        {% endif %}
-                        <label class="form-check-label" for="is_avalable">Available</label>
-                    </div>  
-                    <div class="form-group col-md-4">
-                        <input class="form-check-input" type="checkbox" value="" id="is_discounted" onclick="enable_discount()" value="{{ instance.is_discounted }}">
-                        <label class="form-check-label" for="is_discounted">Discounted</label>
-                    </div>                      
-                </div>                 
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="price">Price </label>
-                        <input type="text" class="form-control" id="price" value="{{ instance.price }}" onchange="setTwoNumberDecimal()" min="0" max="10" step="0.25" value="0.00">
-                    </div>                    
-                    <div class="form-group col-md-4">
-                        <label for="shipping_fee">Shipping Fee</label>
-                        <input type="text" class="form-control" id="shipping_fee" value="{{ instance.shipping_fee }}" onchange="setTwoNumberDecimal()" min="0" max="10" step="0.25" value="0.00">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="discount">Discount</label>
-                        <input type="text" class="form-control" id="discount" value="{{ instance.discount }}" onchange="setTwoNumberDecimal()" min="0" max="10" step="0.25" value="0.00">
-                    </div>
-                </div>               
-                <button type="submit" class="btn btn-warning">Update Product</button>
-            </div>
-            
-            <label class="ml-2" for="categories">
-                Categories
-            </label>
-            <div class="scrollable">                 
-                {% for category in categories %}               
-                    <div class="form-check" id="categories">
-                        {% if category.category == instance.product_category %}                        
-                            <input class="form-check-input" type="checkbox" value="{{ instance.product_category }}" id="product_category" checked>
-                        {% else %}
-                            <input class="form-check-input" type="checkbox" value="{{ instance.product_category }}" id="product_category">
-                        {% endif %}
-                        <label class="form-check-label" for="product_category">
-                            {{ category.category }}
-                        </label>
-                        {% for sub_category in sub_categories %}
-                            {% if sub_category.category == category %}
-                                <div class="form-check">                                    
-                                    <input class="form-check-input" type="checkbox" value="{{ instance.product_subcategory }}" id="product_subcategory">
-                                    <label class="form-check-label" for="product_subcategory">
-                                        {{ sub_category.subcategory }}
-                                    </label>
-                                </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="location">Product Location</label>
+                            <input type="text" class="form-control" id="location" placeholder="ex: Manila" value="{{ instance.location }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="quantity">Quantity</label>
+                            <input type="text" class="form-control" id="quantity" value="{{ instance.quantity }}">
+                        </div>
+                    </div>      
+                    <div class="form-row">
+                        <div class="form-group col-md-4 ml-4">
+                            {% if instance.is_avalable == 'True' %}
+                                <input class="form-check-input" type="checkbox" value="" id="is_avalable" checked>
+                            {% else %}
+                                <input class="form-check-input" type="checkbox" value="" id="is_avalable">
                             {% endif %}
-                        {% endfor %}             
-                    </div>             
-                {% endfor %}
-            </div>            
-        </form>                      
+                            <label class="form-check-label" for="is_avalable">Available</label>
+                        </div>  
+                        <div class="form-group col-md-4">
+                            <input class="form-check-input" type="checkbox" value="" id="is_discounted" onclick="enable_discount()" value="{{ instance.is_discounted }}">
+                            <label class="form-check-label" for="is_discounted">Discounted</label>
+                        </div>                      
+                    </div>                 
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="price">Price </label>
+                            <input type="text" class="form-control" id="price" value="{{ instance.price }}" onchange="setTwoNumberDecimal()" min="0" max="10" step="0.25" value="0.00">
+                        </div>                    
+                        <div class="form-group col-md-4">
+                            <label for="shipping_fee">Shipping Fee</label>
+                            <input type="text" class="form-control" id="shipping_fee" value="{{ instance.shipping_fee }}" onchange="setTwoNumberDecimal()" min="0" max="10" step="0.25" value="0.00">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="discount">Discount</label>
+                            <input type="text" class="form-control" id="discount" value="{{ instance.discount }}" onchange="setTwoNumberDecimal()" min="0" max="10" step="0.25" value="0.00">
+                        </div>
+                    </div>               
+                    <button type="submit" class="btn btn-warning">Update Product</button>
+                </div>
+                
+                <label class="ml-2" for="categories">
+                    Categories
+                </label>
+                <div class="scrollable">                 
+                    {% for category in categories %}               
+                        <div class="form-check" id="categories">
+                            {% if category == instance.product_category %}                        
+                                <input class="form-check-input" type="checkbox" value="{{ category.id }}" onclick="set_category_id('{{ category.id }}')" id="product_category" checked>
+                            {% else %}
+                                <input class="form-check-input" type="checkbox" value="{{ category.id }}" onclick="set_category_id('{{ category.id }}')" id="product_category">
+                            {% endif %}
+                            <label class="form-check-label" for="product_category">
+                                {{ category.name }}
+                            </label>
+                            {% for sub_category in sub_categories %}
+                                {% if sub_category.category == category %}
+                                    <div class="form-check" id="sub_category">
+                                        {% if sub_category == instance.product_subcategory %}  
+                                            <input class="form-check-input" type="checkbox" value="{{ sub_category.id }}" onclick="set_subcategory_id('{{ sub_category.id }}')" id="product_subcategory" checked>
+                                        {% else %}
+                                            <input class="form-check-input" type="checkbox" value="{{ sub_category.id }}" onclick="set_subcategory_id('{{ sub_category.id }}')" id="product_subcategory">
+                                        {% endif %}
+                                        <label class="form-check-label" for="product_subcategory">
+                                            {{ sub_category.name }}
+                                        </label>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}              
+                        </div>             
+                    {% endfor %}
+                </div>            
+            </form>                   
+        {% else %}
+        <div class="text-center">
+            <p>You're not allowed to access this page</p>
+        </div>            
+        {% endif %}
     </div>
     
 {% endblock %}

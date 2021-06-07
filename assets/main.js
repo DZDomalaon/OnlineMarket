@@ -176,7 +176,7 @@ function load_categories(){
                             "<div class='card ml-2 mb-2 mt-4 text-center' id='productcard' style='min-width: 15rem;'>" +
                                 "<img src='"+ value['subcategory_img'] +"' class='card-img-top' type='image/webp'>" +
                                 "<div class='card-body'>" +
-                                    "<h4 class='card-title'>"+ value['subcategory'] + "</h4>"+
+                                    "<h4 class='card-title'>"+ value['name'] + "</h4>"+
                                     "<a class='btn btn-secondary' href='"+product_url+"/undercategory' type='button' class='btn btn-dark ml-2' onclick='get_category("+value['id']+")'> View </a>"+                                                         
                                 "</div>" +
                             "</div>"+
