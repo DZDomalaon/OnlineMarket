@@ -4,7 +4,8 @@
 <html>
 <body>
     <head>
-        <script type="text/javascript" src="{% static 'users/logout/js/logout.js' %}"></script>
+        <script type="text/javascript" src="{% static 'users/js/logout.js' %}"></script>
+        <script type="text/javascript" src="{% static 'products/js/item_count.js' %}"></script>
     </head>
 
     <nav class="navbar navbar-expand-md" style="border-bottom: 3px solid rgb(42, 133, 139);">
@@ -24,7 +25,7 @@
                                 <ul class="navbar-nav">        
                                     <li class="nav-item">
                                         <a href="{% url 'users:usercart' user.id %}" class="nav-link navbar-link-2 waves-effect text-black">
-                                        <span class="badge badge-pill badge-danger">1</span>
+                                        <span class="badge badge-pill badge-danger" id="count"></span>
                                         <i class="bi bi-cart"></i></i>
                                         </a>
                                     </li>    

@@ -7,8 +7,8 @@
 {% endblock %}
 {% block content %}
   
-  <div class="container">    
-    {{ request.user.id|json_script:"user_id" }}
+  <div class="container" id="check_owned">    
+    <input  type="hidden" value="{{ request.user.id }}" id="auth_user">
     <a href="{% url 'products:createproduct' user.id %}" class="btn btn-dark">
       Add Product
     </a>
@@ -25,5 +25,5 @@
 {% endblock %}
 
 {% block extra_js %}
-  <script type="text/javascript" src="{% static 'products/owned/js/owned.js' %}"></script>
+  <script type="text/javascript" src="{% static 'products/js/owned.js' %}"></script>
 {% endblock %}

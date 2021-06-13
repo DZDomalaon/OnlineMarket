@@ -2,13 +2,14 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static 'products/view/css/view.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'products/css/view.css' %}"> 
     <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script>      
 {% endblock %}
 
 
 {% block content %}
 <div class="product" id="productpage">
+    <input  type="hidden" value="{{ request.user.is_authenticated}}" id="auth">
     <input type="hidden" id="product_id" value="{{ view.kwargs.pk }}">
     <input  type="hidden" value="{{ request.user.id }}" id="auth_user">
     <p>{{ view.kwargs.seller }}</p>    
@@ -18,5 +19,6 @@
 
 
 {% block extra_js %}
-    <script type="text/javascript" src="{% static 'products/view/js/view.js' %}"></script>
+    <script type="text/javascript" src="{% static 'products/js/view.js' %}"></script>
+    <script type="text/javascript" src="{% static 'products/js/item_count.js' %}"></script>
 {% endblock %}

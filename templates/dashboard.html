@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block content %}
-<div class=container>    
+<div class=container>        
+    <input  type="hidden" value="{{ request.user.is_authenticated}}" id="auth">
     <input  type="hidden" value="{{ request.user.id }}" id="auth_user">
     <nav class="navbar navbar-light justify-content-center mt-4">
         <div class="form-inline">            

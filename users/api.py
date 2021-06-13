@@ -34,8 +34,7 @@ class UserViewSet(viewsets.ViewSet):
         return Response({'errors': serializer.errors})
 
     def update_user(self, request):
-
-        import pdb; pdb.set_trace()
+        
         get_user = request.POST.get('user', '')
         user = get_object_or_404(CustomUser, pk=int(get_user)) 
         serializer = UserSerializer(user, data=request.data)
@@ -68,8 +67,7 @@ class UserViewSet(viewsets.ViewSet):
 
 
     def userlist(self, request):
-
-        # import pdb;pdb.set_trace()
+        
         list = CustomUser.objects.all()
         serializer = UsersSerializer(list, many=True)
         return Response(serializer.data, status.HTTP_200_OK)

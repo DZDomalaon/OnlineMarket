@@ -1,7 +1,9 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from django.db.models.fields import CharField, SlugField
+from django.db.models.fields import BooleanField, CharField, SlugField
 from datetime import timedelta, datetime
+
+from django.db.models.fields.related import ForeignKey
 from users.models import CustomUser
 
 
@@ -16,7 +18,7 @@ class Category(models.Model):
 
 class SubCategory(models.Model):
 
-    subcategory_img = models.ImageField(blank=True, null=True, upload_to='category/', default='default.png')
+    img = models.ImageField(blank=True, null=True, upload_to='category/', default='default.png')
     name = CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
@@ -44,7 +46,7 @@ class Product(models.Model):
     seller = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.id)
+        return self.product_name
 
 
 class OrderItem(models.Model):
@@ -64,10 +66,29 @@ class Order(models.Model):
     buyer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  
     date_ordered = models.DateTimeField(auto_now_add=True)    
     is_completed = models.BooleanField(default=False)
-    order_item = models.ManyToManyField(OrderItem)
+    order_item = models.ManyToManyField(OrderItem, related_name='order')
 
     def __str__(self):
         return str(self.date_ordered)
+
+
+class CartItem(models.Model):
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)   
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return str(self.product)
+
+
+class Cart(models.Model):
+
+    buyer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)      
+    is_checkedout = models.BooleanField(default=False)
+    cart_item = models.ManyToManyField(CartItem, related_name="cart")    
+
+    def __str__(self):
+        return str(self.buyer)
 
 
 class OrderPayment(models.Model):

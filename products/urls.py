@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/ownedproducts/', AuthSellerViewSet.as_view({'get': 'get_owned_products'})),
     path('api/productstatus/', AuthSellerViewSet.as_view({'get': 'product_status'})),
     path('api/shipitem/', AuthSellerViewSet.as_view({'get': 'ship_item'})),
+    path('api/addorder/', AuthSellerViewSet.as_view({'post': 'create_order'})),     
     path('api/addstock/', AuthSellerViewSet.as_view({'post': 'add_stock'})), 
 
     # AuthBuyer    
@@ -38,11 +39,14 @@ urlpatterns = [
     # AdminUser
     path('api/adminorderedproducts/', AdminUserViewSet.as_view({'get': 'admin_get_ordered_products'})),   
     path('api/adminownedproducts/', AdminUserViewSet.as_view({'get': 'admin_get_owned_products'})),
+    path('api/userorders/', AdminUserViewSet.as_view({'get': 'admin_get_user_orders'})),
 
     # Cart
+    path('api/countitem/', CartViewSet.as_view({'get': 'item_count'})),
     path('api/addtocart/', CartViewSet.as_view({'post': 'add_to_cart'})),
     path('api/updateitem/', CartViewSet.as_view({'post': 'update_item'})),    
     path('api/removeitem/', CartViewSet.as_view({'delete': 'remove_item'})),
+
 
     # Payment
     path('api/addpayment/', PaymentViewSet.as_view({'post': 'add_payment'})),     

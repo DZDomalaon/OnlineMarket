@@ -4,7 +4,7 @@ from .models import Category, CustomUser, Product, SubCategory
 
 
 class OwnedProductsView(TemplateView):
-    
+        
     template_name = "products/owned_products.html"
     # def get(self, request, *args, **kwargs):
     #     current_user = CustomUser.objects.get(pk=kwargs.get('pk'))

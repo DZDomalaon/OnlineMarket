@@ -23,12 +23,11 @@ class DashboardView(TemplateView):
         categories = Category.objects.all()
         return render(request, "dashboard.html", {'products': products, 'categories': categories, 'sub_categories': sub_categories})
 
-
 class UserListView(TemplateView):
     template_name = "users/user_list.html"
 
 
-class UserCartView(TemplateView):
+class UserCartView(TemplateView):    
     template_name = "users/user_cart.html"
 
 class UserPageView(TemplateView):

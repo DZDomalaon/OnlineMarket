@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block head%}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -19,7 +20,7 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script type="text/javascript" src="{% static 'products/under_category/js/under_category.js' %}"></script>
+    <script type="text/javascript" src="{% static 'products/js/under_category.js' %}"></script>
 {% endblock %}
 
     

@@ -2,11 +2,12 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'products/payment/css/payment.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'products/css/payment.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container py-5">
+    <input  type="hidden" value="{{ request.user.id }}" id="auth_user">
     <!-- For demo purpose -->
     <div class="row">
         <div class="col-lg-6 mx-auto">
@@ -23,7 +24,7 @@
                     <div class="tab-content">
 
                         <div id="credit-card" class="tab-pane fade show active pt-3">
-                            <form id="cardform" method="POST">
+                            <form id="cardform">
                                 {% csrf_token %}
                                 <div class="form-group"> <label for="name">
                                         <h6>Card Owner</h6>
@@ -73,5 +74,5 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script type="text/javascript" src="{% static 'products/payment/js/payment.js' %}"></script>
+    <script type="text/javascript" src="{% static 'products/js/payment.js' %}"></script>
 {% endblock %}

@@ -3,40 +3,69 @@
 
 
 {% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/view_user.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="container" id="userpage">
-       
-</div>
-<br>
 <div class="container">
-    <h3>Products</h3>
-    <hr>
-    <div class="row" id="owned">
-    
-    </div>
-</div>
-<br>
-<div class="container">
-    <h3>Cart</h3>
-    <hr>
-    <table class="table table-hover text-center">
-        <thead>
-          <tr>            
-            <th scope="col">Product</th>
-            <th scope="col">Quantity</th>            
-            <th scope="col">Subtotal</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody id="usercart">
-          
-        </tbody>
+  {% if request.user.is_superuser %}
+  <div id="userpage" class="text-center">
+
+  </div>
+  <br>
+  <h3>Products</h3>
+  <hr>
+  <br>
+  <div class="row" id="owned">
+  
+  </div>
+  <br>
+  <h3>Cart</h3>
+  <hr>
+  <div id="cart" class="text-center m-4">
+    <table class="table table-hover">
+      <thead>
+        <tr>            
+          <th scope="col">Product</th>
+          <th scope="col">Quantity</th>            
+          <th scope="col">Subtotal</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody id="usercart">
+        
+      </tbody>
     </table>
+  </div>  
+  <br>
+  <h3>Orders</h3>   
+  <hr> 
+  <div id="order" class="text-center m-4">
+    <table class="table table-hover">
+      <thead>
+        <tr>            
+          <th scope="col">Product</th>
+          <th scope="col">Quantity</th>            
+          <th scope="col">Date Ordered</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody id="orders">        
+      </tbody>
+    </table>
+  </div>  
+  <br>
+  <br>  
+  {% else %}
+  <div class="text-center">
+    You are not allowed to view this page
+  </div>  
+  {% endif %}  
+  
 </div>
 {% endblock %}
 
 {% block extra_js %}
-    <script type="text/javascript" src="{% static 'users/view_user/js/view_user.js' %}"></script>    
+    <script type="text/javascript" src="{% static 'users/js/view_user.js' %}"></script>    
 {% endblock %}
+

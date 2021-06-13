@@ -3,28 +3,31 @@
 
 
 {% block head%}
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/login.css' %}">
 {% endblock %}
 
 {% block content%}
-<div class="container">
-  <input type="hidden" value="{{ request.user.id }}" id="auth_user">
-  <form id="update_user">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="fname">First Name</label>
-        <input type="text" class="form-control" id="fname" placeholder="">
+<div class="container" id="update">
+  <div class="center">
+    <input type="hidden" value="{{ request.user.id }}" id="auth_user" onkeypress="return /[a-z]/i.test(event.key)">
+    <form id="update_user">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="fname">First Name</label>
+          <input type="text" class="form-control" id="fname" placeholder="" onkeypress="return /[a-z]/i.test(event.key)">
+        </div>
+        <div class="form-group">
+          <label for="lname">Last Name</label>
+          <input type="text" class="form-control" id="lname" placeholder="">
+        </div>
+        <div class="text-center">
+          <button class="btn btn-warning" type="submit">Update Details</button>     
       </div>
-      <div class="form-group">
-        <label for="lname">Last Name</label>
-        <input type="text" class="form-control" id="lname" placeholder="">
-      </div>
-      <div class="text-center">
-        <button class="btn btn-warning" type="submit">Update Details</button>     
-    </div>
-  </form>
+    </form>
+  </div>  
 </div>
 {% endblock %}
 
 {% block extra_js%}
-  <script type="text/javascript" src="{% static 'users/update/js/update_user.js' %}"></script>
+  <script type="text/javascript" src="{% static 'users/js/update_user.js' %}"></script>
 {% endblock %}

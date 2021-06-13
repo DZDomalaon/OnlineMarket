@@ -3,9 +3,13 @@ $(document).ready(function(){
     load_sale();
     load_categories();
 
+    $("#category").change(function(){
+        localStorage.setItem("category",($('#category option:selected').val()));
+    })
     $("#subcategory").change(function(){
         localStorage.setItem("subcategory",($('#subcategory option:selected').val()));
     })
+    // console.log($('#auth').val());
 });
 
 // $('#search').keyup(function (){
@@ -40,6 +44,7 @@ function search(){
     console.log("here");
     var user = $('#auth_user').val();
     var subcategory = localStorage.getItem("subcategory");
+    var category = localStorage.getItem("category");
     var base_url = window.location.origin;
     var demo = "";
     $.ajax({
@@ -47,15 +52,16 @@ function search(){
         url: base_url + '/products/api/search/',       
         data:{"product": $("#search").val(),  
               "subcategory": subcategory,
+              "category": category,
               "csrfmiddlewaretoken": csrftoken,},  
         success: function(data){                          
             $.each(data, function( index, value ){
                 // console.log(value['seller']);
                 product_url = base_url + '/products/' + value['id'];
-                demo += "<div class='col-sm-12 col-lg-3'>"+
+                demo += "<div class='col md-4'>"+
                             "<div class='card ml-2 mb-2 mt-4 text-center' id='productcard' style='min-width: 15rem;'>" +
                                 "<img src='"+ value['product_image'] +"' class='card-img-top' type='image/webp'>" +
-                                "<div class='card-body'>" +
+                                "<div class='card-body'>"+
                                     "<h4 class='card-title'>"+ value['product_name'] + "</h4>" +   
                                     "<p class='card-text text-muted h6'>" + value['location'] + " | " + value['price'] + "</p>" +                             
                                     (value['seller'] == user ? "<a class='btn btn-secondary' href='" + product_url + "/productstatus' type='button' class='btn btn-dark ml-2'> View </a>": '') +                                                                  
@@ -170,11 +176,11 @@ function load_categories(){
             console.log(data);
             $.each(data, function( index, value ){
                 console.log(value['id']);
-                var category = value['subcategory'];
+                var category = value['name'];
                 product_url = base_url + '/products/' + value['id'];
                 demo += "<div class='col-sm-12 col-lg-3'>"+
                             "<div class='card ml-2 mb-2 mt-4 text-center' id='productcard' style='min-width: 15rem;'>" +
-                                "<img src='"+ value['subcategory_img'] +"' class='card-img-top' type='image/webp'>" +
+                                "<img src='"+ value['img'] +"' class='card-img-top' type='image/webp'>" +
                                 "<div class='card-body'>" +
                                     "<h4 class='card-title'>"+ value['name'] + "</h4>"+
                                     "<a class='btn btn-secondary' href='"+product_url+"/undercategory' type='button' class='btn btn-dark ml-2' onclick='get_category("+value['id']+")'> View </a>"+                                                         

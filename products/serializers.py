@@ -5,28 +5,28 @@ from users.models import CustomUser
 from django.db.models import fields
 from rest_framework import serializers
 from users.serializers import UserSerializer
-from .models import CODPayment, CardPayment, Category, Order, OrderItem, OrderPayment, Product, SubCategory
+from .models import CODPayment, CardPayment, Cart, CartItem, Category, Order, OrderItem, OrderPayment, Product, SubCategory
 
 class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('category')
+        fields = ('name')
 
 class SubCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SubCategory
-        fields = ('id', 'subcategory_img', 'subcategory')
+        fields = ('id', 'img', 'name')
 
 class ProductSerializer(serializers.ModelSerializer):   
     
-    # product_category = CategorySerializer()
-    # product_subcategory = SubCategorySerializer()
+    product_category = serializers.StringRelatedField(read_only=True)
+    product_subcategory = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Product
-        fields = ('id','product_name', 'product_image',  'product_category', 'product_subcategory', 'description', 'location', 'price','shipping_fee','discount','is_discounted', 'quantity','is_available', 'seller_id',)
+        fields = ('id','product_name', 'product_image', 'product_category', 'product_subcategory','description', 'location', 'price','shipping_fee','discount','is_discounted', 'quantity','is_available', 'seller_id',)
 
 class ProductsSerializer(serializers.ModelSerializer):   
     class Meta:
@@ -85,7 +85,7 @@ class OrderItemAddSerializer(serializers.ModelSerializer):
         
     class Meta:
         model = OrderItem
-        fields = ('id','quantity')  
+        fields = ('id',)  
 
 
 class OrderAddSerializer(serializers.ModelSerializer):
@@ -94,11 +94,56 @@ class OrderAddSerializer(serializers.ModelSerializer):
         model = Order
         fields = ('id', 'is_completed',)    
 
-class UpdateOrderItemSerializer(serializers.ModelSerializer):
+
+class ItemCartSerializer(serializers.ModelSerializer):
+        
+    product = ProductSerializer()
+    
+    class Meta:
+        model = CartItem
+        fields = '__all__'
+
+
+class CartItemAddSerializer(serializers.ModelSerializer):
         
     class Meta:
-        model = OrderItem
+        model = CartItem
         fields = ('id','quantity')  
+
+
+class UpdateCartItemSerializer(serializers.ModelSerializer):
+        
+    class Meta:
+        model = CartItem
+        fields = ('id','quantity')  
+
+
+# class UpdateOrderItemSerializer(serializers.ModelSerializer):
+        
+#     class Meta:
+#         model = OrderItem
+#         fields = ('id','quantity') 
+
+
+class CartSerializer(serializers.ModelSerializer):
+
+    cart_item = ItemCartSerializer(many=True)    
+    class Meta:
+        model = Order
+        fields = ('id', 'is_completed', 'cart_item', 'buyer')
+
+
+class CartAddSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Cart
+        fields = ('id', 'is_checkedout',)  
+
+# class UpdateOrderItemSerializer(serializers.ModelSerializer):
+        
+#     class Meta:
+#         model = OrderItem
+#         fields = ('id','quantity')  
 
 class OrderCartSerializer(serializers.ModelSerializer):
 
@@ -114,7 +159,7 @@ class OrderPaymentSerializer(serializers.ModelSerializer):
         model = Order
         fields = ('id', 'is_completed',)
 
-class OrderItemCartSerializer(serializers.ModelSerializer):
+class OrderStatusSerializer(serializers.ModelSerializer):
     
     date_added = serializers.DateTimeField(format="%Y-%m-%d")
     product = ProductSerializer()
@@ -123,9 +168,15 @@ class OrderItemCartSerializer(serializers.ModelSerializer):
         model = OrderItem
         fields = '__all__'
 
+class AddOrderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Order
+        fields = ('id',)
+
 class OrderSerializer(serializers.ModelSerializer):
 
-    order_item = OrderItemCartSerializer(many=True)
+    order_item = OrderStatusSerializer(many=True)
     date_ordered = serializers.DateTimeField(format="%Y-%m-%d")
     class Meta:
         model = Order

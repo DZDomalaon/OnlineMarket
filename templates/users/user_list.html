@@ -5,23 +5,28 @@
 {% endblock %}
 
 {% block content %}
-<div class="container" id="user_list">
-    <table class="table table-hover text-center">
-        <thead>
-          <tr>            
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>            
-            <th scope="col">Is Seller</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody id="userlist">
-          
-        </tbody>
-    </table>
-</div>
+  <div class="container text-center" id="user_list"></div>
+    {% if request.user.is_superuser %}  
+      <table class="table table-hover text-center">
+          <thead>
+            <tr>            
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>            
+              <th scope="col">Is Seller</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="userlist">
+            
+          </tbody>
+      </table>  
+    {% else %}
+    <div class="text-center">
+      You are not allowed to view this page
+    </div>
+    {% endif %}  
+  </div>
 {% endblock %}
-
 {% block extra_js %}
-  <script type="text/javascript" src="{% static 'users/list/js/userlist.js' %}"></script>
+  <script type="text/javascript" src="{% static 'users/js/userlist.js' %}"></script>
 {% endblock %}
